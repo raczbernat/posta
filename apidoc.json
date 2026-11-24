@@ -1,0 +1,7 @@
+{
+  "name": "Irányítószám API",
+  "version": "1.0.0",
+  "description": "Laravel REST API magyar települések irányítószámaihoz (keresés, megyeszűrés, tokenes módosítás).",
+  "title": "Irányítószám API dokumentáció",
+  "url": "http://localhost:8000/api"
+}

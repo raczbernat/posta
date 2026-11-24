@@ -1,0 +1,523 @@
+[
+  {
+    "type": "post",
+    "url": "/login",
+    "title": "Bejelentkezés",
+    "name": "Login",
+    "group": "Auth",
+    "version": "1.0.0",
+    "description": "<p>E-mail és jelszó alapján Bearer tokent ad.</p>",
+    "body": [
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": false,
+        "field": "email",
+        "isArray": false,
+        "description": "<p>E-mail cím</p>"
+      },
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": false,
+        "field": "password",
+        "isArray": false,
+        "description": "<p>Jelszó</p>"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "isArray": false,
+            "description": "<p>Bearer token</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Siker (200):",
+          "content": "{\"token\": \"2|xyz789...\", \"user\": {\"id\": 1, \"name\": \"Teszt Elek\", \"email\": \"teszt@example.com\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "401": [
+          {
+            "group": "401",
+            "optional": false,
+            "field": "Unauthorized",
+            "isArray": false,
+            "description": "<p>Hibás e-mail vagy jelszó</p>"
+          }
+        ]
+      }
+    },
+    "filename": "AuthController.php",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "post",
+    "url": "/register",
+    "title": "Regisztráció",
+    "name": "Register",
+    "group": "Auth",
+    "version": "1.0.0",
+    "description": "<p>Új felhasználót hoz létre és visszaad egy Bearer tokent.</p>",
+    "body": [
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": false,
+        "field": "name",
+        "isArray": false,
+        "description": "<p>Név</p>"
+      },
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": false,
+        "field": "email",
+        "isArray": false,
+        "description": "<p>E-mail cím</p>"
+      },
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": false,
+        "field": "password",
+        "isArray": false,
+        "description": "<p>Jelszó (min. 8 karakter)</p>"
+      }
+    ],
+    "success": {
+      "fields": {
+        "201": [
+          {
+            "group": "201",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "isArray": false,
+            "description": "<p>Bearer token</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Siker (201):",
+          "content": "{\"token\": \"1|abc123...\", \"user\": {\"id\": 1, \"name\": \"Teszt Elek\", \"email\": \"teszt@example.com\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "422": [
+          {
+            "group": "422",
+            "optional": false,
+            "field": "ValidationError",
+            "isArray": false,
+            "description": "<p>Hibás vagy hiányzó mező</p>"
+          }
+        ]
+      }
+    },
+    "filename": "AuthController.php",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "get",
+    "url": "/megyek",
+    "title": "Megyék listája",
+    "name": "MegyekIndex",
+    "group": "Megyek",
+    "version": "1.0.0",
+    "description": "<p>Az összes megye név szerint rendezve (a szűréshez használható <code>megye_id</code>-kkal).</p>",
+    "success": {
+      "examples": [
+        {
+          "title": "Siker (200):",
+          "content": "HTTP/1.1 200 OK\n[\n  {\"id\": 1, \"nev\": \"Bács-Kiskun\"},\n  {\"id\": 2, \"nev\": \"Baranya\"}\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "MegyeController.php",
+    "groupTitle": "Megyek"
+  },
+  {
+    "type": "delete",
+    "url": "/telepulesek/:id",
+    "title": "Település törlése",
+    "name": "TelepulesDestroy",
+    "group": "Telepulesek",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "token"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "isArray": false,
+            "description": "<p><code>Bearer &lt;token&gt;</code></p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "isArray": false,
+            "description": "<p>Település azonosító</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "204": [
+          {
+            "group": "204",
+            "type": "null",
+            "optional": false,
+            "field": "-",
+            "isArray": false,
+            "description": "<p>Sikeres törlés, nincs választörzs</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "401": [
+          {
+            "group": "401",
+            "optional": false,
+            "field": "Unauthenticated",
+            "isArray": false,
+            "description": "<p>Hiányzó vagy érvénytelen token</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "optional": false,
+            "field": "NotFound",
+            "isArray": false,
+            "description": "<p>Nincs ilyen település</p>"
+          }
+        ]
+      }
+    },
+    "filename": "TelepulesController.php",
+    "groupTitle": "Telepulesek"
+  },
+  {
+    "type": "get",
+    "url": "/telepulesek/:id",
+    "title": "Egy település lekérése",
+    "name": "TelepulesShow",
+    "group": "Telepulesek",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "isArray": false,
+            "description": "<p>Település azonosító</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Siker (200):",
+          "content": "{\"id\": 14, \"irsz\": \"2000\", \"nev\": \"Szentendre\", \"megye_id\": 14, \"megye\": {\"id\": 14, \"nev\": \"Pest\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "404": [
+          {
+            "group": "404",
+            "optional": false,
+            "field": "NotFound",
+            "isArray": false,
+            "description": "<p>Nincs ilyen település</p>"
+          }
+        ]
+      }
+    },
+    "filename": "TelepulesController.php",
+    "groupTitle": "Telepulesek"
+  },
+  {
+    "type": "post",
+    "url": "/telepulesek",
+    "title": "Új település felvétele",
+    "name": "TelepulesStore",
+    "group": "Telepulesek",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "token"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "isArray": false,
+            "description": "<p><code>Bearer &lt;token&gt;</code></p>"
+          }
+        ]
+      }
+    },
+    "body": [
+      {
+        "group": "Body",
+        "type": "String",
+        "size": "4",
+        "optional": false,
+        "field": "irsz",
+        "isArray": false,
+        "description": "<p>Irányítószám (4 számjegy)</p>"
+      },
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": false,
+        "field": "nev",
+        "isArray": false,
+        "description": "<p>Település neve</p>"
+      },
+      {
+        "group": "Body",
+        "type": "Number",
+        "optional": false,
+        "field": "megye_id",
+        "isArray": false,
+        "description": "<p>Létező megye azonosítója</p>"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Siker (201):",
+          "content": "{\"id\": 21, \"irsz\": \"2100\", \"nev\": \"Gödöllő\", \"megye_id\": 14, \"megye\": {\"id\": 14, \"nev\": \"Pest\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "401": [
+          {
+            "group": "401",
+            "optional": false,
+            "field": "Unauthenticated",
+            "isArray": false,
+            "description": "<p>Hiányzó vagy érvénytelen token</p>"
+          }
+        ],
+        "422": [
+          {
+            "group": "422",
+            "optional": false,
+            "field": "ValidationError",
+            "isArray": false,
+            "description": "<p>Hibás mező</p>"
+          }
+        ]
+      }
+    },
+    "filename": "TelepulesController.php",
+    "groupTitle": "Telepulesek"
+  },
+  {
+    "type": "put",
+    "url": "/telepulesek/:id",
+    "title": "Település módosítása",
+    "name": "TelepulesUpdate",
+    "group": "Telepulesek",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "token"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "isArray": false,
+            "description": "<p><code>Bearer &lt;token&gt;</code></p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "isArray": false,
+            "description": "<p>Település azonosító</p>"
+          }
+        ]
+      }
+    },
+    "body": [
+      {
+        "group": "Body",
+        "type": "String",
+        "size": "4",
+        "optional": true,
+        "field": "irsz",
+        "isArray": false,
+        "description": "<p>Irányítószám</p>"
+      },
+      {
+        "group": "Body",
+        "type": "String",
+        "optional": true,
+        "field": "nev",
+        "isArray": false,
+        "description": "<p>Település neve</p>"
+      },
+      {
+        "group": "Body",
+        "type": "Number",
+        "optional": true,
+        "field": "megye_id",
+        "isArray": false,
+        "description": "<p>Megye azonosító</p>"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Siker (200):",
+          "content": "{\"id\": 21, \"irsz\": \"2100\", \"nev\": \"Gödöllő\", \"megye_id\": 14, \"megye\": {\"id\": 14, \"nev\": \"Pest\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "401": [
+          {
+            "group": "401",
+            "optional": false,
+            "field": "Unauthenticated",
+            "isArray": false,
+            "description": "<p>Hiányzó vagy érvénytelen token</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "optional": false,
+            "field": "NotFound",
+            "isArray": false,
+            "description": "<p>Nincs ilyen település</p>"
+          }
+        ],
+        "422": [
+          {
+            "group": "422",
+            "optional": false,
+            "field": "ValidationError",
+            "isArray": false,
+            "description": "<p>Hibás mező</p>"
+          }
+        ]
+      }
+    },
+    "filename": "TelepulesController.php",
+    "groupTitle": "Telepulesek"
+  },
+  {
+    "type": "get",
+    "url": "/telepulesek",
+    "title": "Települések listázása, keresés, megyeszűrés",
+    "name": "TelepulesekIndex",
+    "group": "Telepulesek",
+    "version": "1.0.0",
+    "description": "<p>Lapozott lista irányítószám szerint rendezve. A két szűrő együtt is használható.</p>",
+    "query": [
+      {
+        "group": "Query",
+        "type": "String",
+        "optional": true,
+        "field": "search",
+        "isArray": false,
+        "description": "<p>Keresés a település nevében vagy az irányítószám elején</p>"
+      },
+      {
+        "group": "Query",
+        "type": "Number",
+        "optional": true,
+        "field": "megye_id",
+        "isArray": false,
+        "description": "<p>Szűrés megye azonosító szerint</p>"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Példa:",
+        "content": "curl \"http://localhost:8000/api/telepulesek?search=sze&megye_id=14\"",
+        "type": "curl"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Siker (200):",
+          "content": "{\n  \"current_page\": 1,\n  \"data\": [\n    {\"id\": 14, \"irsz\": \"2000\", \"nev\": \"Szentendre\", \"megye_id\": 14,\n     \"megye\": {\"id\": 14, \"nev\": \"Pest\"}}\n  ],\n  \"total\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "TelepulesController.php",
+    "groupTitle": "Telepulesek"
+  }
+]
